@@ -1,4 +1,4 @@
-import { LogLevel, LoggerOut, Logger } from '../src/logger'
+import { LoggerOut, Logger } from '../src/logger'
 
 const september = 8
 const date9 = new Date(2022, september, 9, 9, 9, 9)
@@ -7,7 +7,7 @@ const october = 9
 const date10 = new Date(2022, october, 10, 10, 10, 10)
 
 class TestOut implements LoggerOut {
-  result: string = ''
+  result = ''
 
   debug(message: string) {
     this.result = message
