@@ -13,6 +13,8 @@
     "clean": "rimraf dist coverage"
   },
   "devDependencies": {
+    "@babel/core": "^7.19.0",
+    "@babel/preset-env": "^7.19.0",
     "@types/jest": "^29.0.0",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
