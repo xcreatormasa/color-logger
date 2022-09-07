@@ -5,12 +5,11 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "browser": "dist/color-logger.js",
-  "types": "types/index.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "package.json",
     "README.md",
     "LICENSE",
-    "types",
     "dist"
   ],
   "author": "xcreatormasa",
