@@ -1,4 +1,4 @@
-import { LoggerOut, Logger } from '../src/logger'
+import logger, { LoggerOut } from '../src/logger'
 
 const september = 8
 const date9 = new Date(2022, september, 9, 9, 9, 9)
@@ -30,62 +30,60 @@ class TestOut implements LoggerOut {
   }
 }
 
-class TestLogger extends Logger {
-  override now(): Date {
-    return date10
-  }
-}
+const out = new TestOut()
+logger.out = out
 
 describe('Logger#formatDate()', () => {
+  beforeAll(() => {
+    logger.config = {
+      dateTime: true,
+    }
+  })
+
   test('2022/09/09 09:09:09', () => {
-    expect(Logger.formatDate(date9)).toBe('2022/09/09 09:09:09')
+    logger.dateTimeGenerator = () => date9
+    logger.log('Test')
+    expect(out.result).toBe('2022/09/09 09:09:09 [Log] Test')
   })
 
   test('2022/10/10 10:10:10', () => {
-    expect(Logger.formatDate(date10)).toBe('2022/10/10 10:10:10')
-  })
-})
-
-describe('Logger#toLogString()', () => {
-  test('Info', () => {
-    expect(Logger.toLogString(date9, 'info', 'This is info message.')).toBe(
-      '2022/09/09 09:09:09 [Info] This is info message.',
-    )
-  })
-
-  test('Error', () => {
-    expect(Logger.toLogString(date10, 'error', 'This is error message.')).toBe(
-      '2022/10/10 10:10:10 [Error] This is error message.',
-    )
+    logger.dateTimeGenerator = () => date10
+    logger.log('Test')
+    expect(out.result).toBe('2022/10/10 10:10:10 [Log] Test')
   })
 })
 
 describe('Logger#debug(), log(), info(), warn(), error()', () => {
-  const out = new TestOut()
-  const logger = new TestLogger(out)
+  beforeAll(() => {
+    logger.config = {
+      info: 'green',
+      warn: 'yellow',
+      error: 'red',
+    }
+  })
 
   test('debug()', () => {
-    logger.debug('This is debug message.')
-    expect(out.result).toBe('2022/10/10 10:10:10 [Debug] This is debug message.')
+    logger.debug('Test')
+    expect(out.result).toBe('[Debug] Test')
   })
 
   test('log()', () => {
-    logger.log('This is log message.')
-    expect(out.result).toBe('2022/10/10 10:10:10 [Log] This is log message.')
+    logger.log('Test')
+    expect(out.result).toBe('[Log] Test')
   })
 
   test('info()', () => {
-    logger.info('This is info message.')
-    expect(out.result).toBe('2022/10/10 10:10:10 [Info] This is info message.')
+    logger.info('Test')
+    expect(out.result).toBe('[Info] \x1b[32mTest\x1b[39m')
   })
 
   test('warn()', () => {
-    logger.warn('This is warn message.')
-    expect(out.result).toBe('2022/10/10 10:10:10 [Warn] This is warn message.')
+    logger.warn('Test')
+    expect(out.result).toBe('[Warn] \x1b[33mTest\x1b[39m')
   })
 
   test('error()', () => {
-    logger.error('This is error message.')
-    expect(out.result).toBe('2022/10/10 10:10:10 [Error] This is error message.')
+    logger.error('Test')
+    expect(out.result).toBe('[Error] \x1b[31mTest\x1b[39m')
   })
 })
