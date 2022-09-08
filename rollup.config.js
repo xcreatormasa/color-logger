@@ -11,6 +11,7 @@ import pkg from './package.json'
 
 const moduleName = upperFirst(camelCase(pkg.name.replace(/^@.*\//, '')))
 const inputFileName = 'src/index.ts'
+const browserVar = 'logger'
 
 const banner = `
   /**
@@ -83,7 +84,7 @@ export default [
     output: [
       // Uncompressed
       {
-        name: moduleName,
+        name: browserVar,
         file: pkg.browser,
         format: 'iife',
         sourcemap: 'inline',
@@ -91,7 +92,7 @@ export default [
       },
       // Minified
       {
-        name: moduleName,
+        name: browserVar,
         file: pkg.browser.replace('.js', '.min.js'),
         format: 'iife',
         sourcemap: 'inline',
