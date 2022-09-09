@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "The logger that can output with colors.",
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "browser": "dist/color-logger.js",
   "types": "dist/index.d.ts",
   "files": [
     "package.json",
