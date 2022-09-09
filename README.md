@@ -38,6 +38,8 @@ import logger from '@xcreatormasa/color-logger'
 logger.info('This is an info message.')
 ```
 
+logger has 5 methods: debug(), log(), info(), warn(), error().
+
 ## Config
 
 You can configure output by setting logger.config.
