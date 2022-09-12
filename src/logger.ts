@@ -87,7 +87,7 @@ class Logger {
     return `${yearStr}/${monthStr}/${dayStr} ${hourStr}:${minStr}:${secStr}`
   }
 
-  private toLogString(logLevel: LogLevel, message: string) {
+  private toLogString(logLevel: LogLevel, message: unknown) {
     let escapeChar = ''
     let resetChar = ''
     const color = this.config[logLevel]
@@ -100,28 +100,28 @@ class Logger {
     if (this.config.dateTime) result += this.formatDate(this.dateTimeGenerator()) + ' '
     result += `[${toFirstLetterUpper(logLevel)}] `
     result += escapeChar
-    result += message
+    result += String(message)
     result += resetChar
     return result
   }
 
-  debug(message: string) {
+  debug(message: unknown) {
     this.out.debug(this.toLogString('debug', message))
   }
 
-  log(message: string) {
+  log(message: unknown) {
     this.out.log(this.toLogString('log', message))
   }
 
-  info(message: string) {
+  info(message: unknown) {
     this.out.info(this.toLogString('info', message))
   }
 
-  warn(message: string) {
+  warn(message: unknown) {
     this.out.warn(this.toLogString('warn', message))
   }
 
-  error(message: string) {
+  error(message: unknown) {
     this.out.error(this.toLogString('error', message))
   }
 }
